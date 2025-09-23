@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { amico1, amico2, amico3 } from "../../assets";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPasswordForm = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
   });
+  const navigate = useNavigate();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [amico1, amico2, amico3];
@@ -27,6 +29,7 @@ const ForgotPasswordForm = () => {
 
   const handleSubmit = () => {
     console.log("Forgot Password request:", formData);
+    navigate('/password-sent');
   };
 
   return (

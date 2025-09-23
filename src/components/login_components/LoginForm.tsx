@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { amico1, amico2, amico3 } from "../../assets";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,6 +10,7 @@ const LoginForm = () => {
     username: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [amico1, amico2, amico3];
@@ -34,6 +36,7 @@ const LoginForm = () => {
 
   const handleSubmit = () => {
     console.log("Login attempt:", formData);
+    navigate('/dashboard');
   };
 
   return (
@@ -101,7 +104,7 @@ const LoginForm = () => {
               />
               <span className="text-sm text-gray-700">Keep me Logged In</span>
             </label>
-            <button className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+            <button onClick={()=>navigate('/forgot-password')} className="text-sm text-purple-600 hover:text-purple-700 font-medium">
               Forgot Password?
             </button>
           </div>

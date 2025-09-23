@@ -1,7 +1,9 @@
 import React from 'react';
 import { checkCircle } from '../../assets';
+import { useNavigate } from 'react-router-dom';
 
 const PasswordSentCard = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white rounded-3xl p-8 shadow-2xl max-w-md w-full">
       {/* Title */}
@@ -26,7 +28,7 @@ const PasswordSentCard = () => {
         </p>
         
         {/* Success Button */}
-        <button className="text-green-600 hover:text-green-700 font-medium transition-colors">
+        <button onClick={()=>navigate('/login')} className="text-green-600 hover:text-green-700 font-medium transition-colors">
           Okay, thank you
         </button>
       </div>
