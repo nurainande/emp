@@ -23,6 +23,7 @@
 // export default DashboardPositivity
 
 import React from "react";
+import BubbleCharts from "../../charts/BubbleCharts";
 
 const DashboardPositivity = () => {
   return (
@@ -34,7 +35,8 @@ const DashboardPositivity = () => {
           Bubble Chart Positivity
         </h2>
         <div className="w-full h-[350px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-600">
-          BubbleChats will render here
+          {/* BubbleChats will render here */}
+          <BubbleCharts/>
         </div>
       </div>
 
