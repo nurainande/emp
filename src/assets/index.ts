@@ -15,6 +15,8 @@ import trendingup2 from './trending-up (1).png';
 import trendingup3 from './trending-up (2).png';
 import trendingup4 from './trending-up (3).png';
 
+import facility_model from './facility_model.png';
+
 
 
 // Add more imports as needed
@@ -33,6 +35,7 @@ export {
     trendingup2,
     trendingup3,
     trendingup4,
+    facility_model,
     
     // Add more exports as needed
 };

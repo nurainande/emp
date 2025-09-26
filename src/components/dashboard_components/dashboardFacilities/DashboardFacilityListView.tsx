@@ -1,241 +1,3 @@
-// Version 1 good
-// import React, { useState, useMemo } from "react";
-// import {
-//   FaMagnifyingGlass,
-//   FaCalendarDays,
-//   FaDownload,
-//   FaTableCellsLarge,
-//   FaBarsStaggered,
-// } from "react-icons/fa6";
-
-// interface Facility {
-//   id: number;
-//   name: string;
-//   location: string;
-//   totalTags: number;
-//   status: "Active" | "Pending" | "Completed";
-//   action: "Continue" | "Tag Now" | "View Report"
-//   color?: string;
-// }
-
-// const DashboardFacilityListView: React.FC = () => {
-//   const [activeTab, setActiveTab] = useState("All Facilities");
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [startDate, setStartDate] = useState("");
-//   const [endDate, setEndDate] = useState("");
-//   const [viewMode, setViewMode] = useState("table");
-//   const [selectedFacilities, setSelectedFacilities] = useState<number[]>([]);
-
-//   const facilities: Facility[] = [
-//     { id: 1, name: "Comodore Factory", location: "Efab, Abuja. Nigeria", totalTags: 39, status: "Active",action:"Continue",color:"green" },
-//     { id: 2, name: "Eagle Prime Facility", location: "Wuse, Abuja. Nigeria", totalTags: 348, status: "Pending",action:"Tag Now",color:"yellow" },
-//     { id: 3, name: "Krystine Reasearch Insti...", location: "Garki, Abuja. Nigeria", totalTags: 9, status: "Active",action:"Continue",color:"green"},
-//     { id: 4, name: "Polish port", location: "Guzape, Abuja. Nigeria", totalTags: 988, status: "Completed",action:"View Report",color:"red" },
-//     { id: 5, name: "Sampfield Facility", location: "Garki, Abuja. Nigeria", totalTags: 8796, status: "Active",action:"Continue",color:"green" },
-//   ];
-
-//   const tabs = ["All Facilities", "Active Facilities", "Pending Facilities", "Completed Facilities"];
-
-//   const filteredFacilities = useMemo(() => {
-//     return facilities.filter((facility) => {
-//       const matchesTab =
-//         activeTab === "All Facilities" ||
-//         (activeTab === "Active Facilities" && facility.status === "Active") ||
-//         (activeTab === "Pending Facilities" && facility.status === "Pending") ||
-//         (activeTab === "Completed Facilities" && facility.status === "Completed");
-
-//       const matchesSearch =
-//         facility.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-//         facility.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-//         facility.status.toLowerCase().includes(searchQuery.toLowerCase());
-
-//       return matchesTab && matchesSearch;
-//     });
-//   }, [activeTab, searchQuery, facilities]);
-
-//   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     if (e.target.checked) {
-//       setSelectedFacilities(filteredFacilities.map((f) => f.id));
-//     } else {
-//       setSelectedFacilities([]);
-//     }
-//   };
-
-//   const handleSelectFacility = (id: number) => {
-//     setSelectedFacilities((prev) =>
-//       prev.includes(id) ? prev.filter((_id) => _id !== id) : [...prev, id]
-//     );
-//   };
-
-//   const allFacilitiesSelected =
-//     filteredFacilities.length > 0 && selectedFacilities.length === filteredFacilities.length;
-//   const someFacilitiesSelected =
-//     selectedFacilities.length > 0 && !allFacilitiesSelected;
-
-//   return (
-//     <div className="overflow-hidden font-sans text-sm">
-//       {/* Tabs */}
-//       <div className="flex gap-2 p-4">
-//         {tabs.map((tab) => (
-//           <button
-//             key={tab}
-//             onClick={() => setActiveTab(tab)}
-//             className={`px-5 py-2 rounded-full text-xs font-medium transition-colors 
-//               ${
-//                 activeTab === tab
-//                   ? "bg-[#3C0A6D] text-white"
-//                   : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50"
-//               }`}
-//           >
-//             {tab}
-//           </button>
-//         ))}
-//       </div>
-
-//       {/* Controls */}
-//       <div className="p-4 bg-white border-b border-gray-200">
-//         <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-//           {/* Search */}
-//           <div className="relative flex-1 max-w-md">
-//             <FaMagnifyingGlass className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-//             <input
-//               type="text"
-//               placeholder="Search by Facility, Status, Locat...."
-//               value={searchQuery}
-//               onChange={(e) => setSearchQuery(e.target.value)}
-//               className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#3C0A6D] text-xs"
-//             />
-//           </div>
-
-//           {/* Filters */}
-//           <div className="flex flex-wrap gap-2 items-center">
-//             <div className="relative">
-//               <FaCalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-//               <input
-//                 type="text"
-//                 onFocus={(e) => (e.target.type = "date")}
-//                 onBlur={(e) => (e.target.type = "text")}
-//                 placeholder="Start Date"
-//                 value={startDate}
-//                 onChange={(e) => setStartDate(e.target.value)}
-//                 className="pl-9 pr-3 py-2.5 border border-gray-300 rounded-md text-xs focus:ring-2 focus:ring-[#3C0A6D]"
-//               />
-//             </div>
-
-//             <div className="relative">
-//               <FaCalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-//               <input
-//                 type="text"
-//                 onFocus={(e) => (e.target.type = "date")}
-//                 onBlur={(e) => (e.target.type = "text")}
-//                 placeholder="End Date"
-//                 value={endDate}
-//                 onChange={(e) => setEndDate(e.target.value)}
-//                 className="pl-9 pr-3 py-2.5 border border-gray-300 rounded-md text-xs focus:ring-2 focus:ring-[#3C0A6D]"
-//               />
-//             </div>
-
-//             <select className="px-3 py-2.5 border border-gray-300 rounded-md text-xs bg-white focus:ring-2 focus:ring-[#3C0A6D]">
-//               <option>Monthly</option>
-//               <option>Weekly</option>
-//               <option>Daily</option>
-//             </select>
-
-//             {/* View Mode */}
-//             <div className="flex border border-gray-300 rounded-md overflow-hidden">
-//               <button
-//                 onClick={() => setViewMode("grid")}
-//                 className={`p-2.5 ${
-//                   viewMode === "grid" ? "bg-[#3C0A6D] text-white" : "text-gray-500 hover:bg-gray-100"
-//                 }`}
-//               >
-//                 <FaTableCellsLarge className="h-4 w-4" />
-//               </button>
-//               <button
-//                 onClick={() => setViewMode("table")}
-//                 className={`p-2.5 ${
-//                   viewMode === "table" ? "bg-[#3C0A6D] text-white" : "text-gray-500 hover:bg-gray-100"
-//                 }`}
-//               >
-//                 <FaBarsStaggered className="h-4 w-4" />
-//               </button>
-//             </div>
-
-//             <button className="flex items-center gap-2 px-3 py-2.5 bg-[#3C0A6D] text-white rounded-md hover:bg-purple-800 text-xs">
-//               <FaDownload className="h-4 w-4" />
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Table */}
-//       <div className="overflow-x-auto bg-white border border-gray-200 rounded-md mt-4">
-//         <table className="w-full">
-//           <thead className="bg-[#3C0A6D] text-white text-xs">
-//             <tr>
-//               <th className="px-4 py-3 text-left">
-//                 <input
-//                   type="checkbox"
-//                   className="rounded border-white text-[#3C0A6D] bg-white h-4 w-4"
-//                   checked={allFacilitiesSelected}
-//                   onChange={handleSelectAll}
-//                   ref={(input) => {
-//                     if (input) {
-//                       input.indeterminate = someFacilitiesSelected;
-//                     }
-//                   }}
-//                 />
-//               </th>
-//               <th className="px-4 py-3 text-left font-medium">Facility Name</th>
-//               <th className="px-4 py-3 text-left font-medium">Location</th>
-//               <th className="px-4 py-3 text-left font-medium">Total Tags</th>
-//               <th className="px-4 py-3 text-left font-medium">Status</th>
-//               <th className="px-4 py-3 text-left font-medium">Action</th>
-//             </tr>
-//           </thead>
-//           <tbody className="divide-y divide-gray-200 text-xs">
-//             {filteredFacilities.map((facility) => (
-//               <tr key={facility.id} className="hover:bg-gray-50">
-//                 <td className="px-4 py-3">
-//                   <input
-//                     type="checkbox"
-//                     className="rounded border-gray-300 text-[#3C0A6D] h-4 w-4"
-//                     checked={selectedFacilities.includes(facility.id)}
-//                     onChange={() => handleSelectFacility(facility.id)}
-//                   />
-//                 </td>
-//                 <td className="px-4 py-3 font-medium text-gray-900">{facility.name}</td>
-//                 <td className="px-4 py-3 text-gray-600">{facility.location}</td>
-//                 <td className="px-4 py-3 font-medium text-gray-900">{facility.totalTags}</td>
-//                 <td className="px-4 py-3">
-//                   <span className="inline-flex items-center">
-//                     {facility.name === "Sampfield Facility" && (
-//                       <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-//                     )}
-//                     <span className={`text-${facility.color}-600 font-medium`}>{facility.status}</span>
-//                   </span>
-//                 </td>
-//                 <td className="px-4 py-3">
-//                   <button className="text-[#3C0A6D] hover:text-purple-800 font-medium">{facility.action}</button>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-
-//       {filteredFacilities.length === 0 && (
-//         <div className="text-center py-12 text-gray-500 text-sm">
-//           No facilities found matching your criteria.
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default DashboardFacilityListView;
-
-
 import React, { useState, useMemo } from "react";
 import {
   FaMagnifyingGlass,
@@ -245,6 +7,7 @@ import {
   FaBarsStaggered, // List/Table Icon
   FaLocationDot, // Location pin icon
 } from "react-icons/fa6";
+import {  useNavigate } from "react-router-dom";
 
 interface Facility {
   id: number;
@@ -264,7 +27,7 @@ const DashboardFacilityListView: React.FC = () => {
   const [endDate, setEndDate] = useState("");
   const [viewMode, setViewMode] = useState("table"); // 'table' or 'grid'
   const [selectedFacilities, setSelectedFacilities] = useState<number[]>([]);
-
+  const navigate=useNavigate()
   // Updated facilities data with image URLs and status colors
   const facilities: Facility[] = [
     {
@@ -293,7 +56,7 @@ const DashboardFacilityListView: React.FC = () => {
       location: "Garki, Abuja. Nigeria",
       totalTags: 1, // Updated count to match image
       status: "Completed", // Updated status to match image
-      action: "Tag Now", // Updated action to match image
+      action: "View Report", // Updated action to match image
       statusColor: "red", // Updated status color to match image
       imageUrl: "https://via.placeholder.com/300x200?text=Krestlyn+Research", // Placeholder image
     },
@@ -303,7 +66,7 @@ const DashboardFacilityListView: React.FC = () => {
       location: "Garki, Abuja. Nigeria",
       totalTags: 10, // Updated count to match image
       status: "Completed", // Updated status to match image
-      action: "Tag Now", // Updated action to match image
+      action: "View Report", // Updated action to match image
       statusColor: "red",
       imageUrl: "https://via.placeholder.com/300x200?text=Bond+Street", // Placeholder image
     },
@@ -521,7 +284,7 @@ const DashboardFacilityListView: React.FC = () => {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <button className="text-[#3C0A6D] hover:text-purple-800 font-medium">{facility.action}</button>
+                    <button className="text-[#3C0A6D] hover:text-purple-800 font-medium" onClick={()=>navigate('/dashboard/facilities/facilityId')}>{facility.action}</button>
                   </td>
                 </tr>
               ))}

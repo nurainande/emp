@@ -10,6 +10,7 @@ import DashboardHome from './pages/dashboard/DashboardHome'
 import DashboardFacilities from './pages/dashboard/DashboardFacilities'
 import DashboardReports from './pages/dashboard/DashboardReports'
 import DashboardSettings from './pages/dashboard/DashboardSettings'
+import DashboardViewFacility from './components/dashboard_components/dashboardFacilities/DashboardViewFacility'
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
         {/* dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
-          <Route path="facilities" element={<DashboardFacilities />} />
+          <Route path="facilities" element={<DashboardFacilities />}/>
+          <Route path="facilities/:facilityId" element={<DashboardViewFacility />} />
           <Route path="reports" element={<DashboardReports />} />
           <Route path="settings" element={<DashboardSettings />} />
         </Route>
