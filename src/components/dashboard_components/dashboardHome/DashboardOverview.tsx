@@ -12,20 +12,6 @@ import {  line1,
     trendingup4,} from "../../../assets"
 
 
-// import your assets
-// import totalSamplesIcon from "../../assets/icons/samplesIcon.png";
-// import totalFacilitiesIcon from "../../assets/icons/facilitiesIcon.png";
-// import totalReviewersIcon from "../../assets/icons/reviewersIcon.png";
-// import totalSamplersIcon from "../../assets/icons/samplersIcon.png";
-
-// import trendUp from "../../assets/icons/trendUp.png";
-// import trendDown from "../../assets/icons/trendDown.png";
-
-// import sampleChart from "../../assets/charts/sample.png";
-// import facilitiesChart from "../../assets/charts/facilities.png";
-// import reviewersChart from "../../assets/charts/reviewers.png";
-// import samplersChart from "../../assets/charts/samplers.png";
-
 const DashboardOverview = () => {
   return (
     <div className="space-y-8 mb-6">
@@ -38,7 +24,7 @@ const DashboardOverview = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <StatCard
           title="Total Samples"
           value={305}

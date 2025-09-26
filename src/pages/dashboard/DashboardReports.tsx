@@ -1,4 +1,4 @@
-import DashboardOverview from '../../components/dashboard/dashboardHome/DashboardOverview';
+import DashboardOverview from '../../components/dashboard_components/dashboardHome/DashboardOverview';
 
 const DashboardReports:React.FC = () => {
   return (
