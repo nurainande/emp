@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type ReportRow = {
   id: string;
@@ -69,6 +70,7 @@ function StatusPill({ status }: { status: ReportRow['status'] }) {
 }
 
 const ReportsTable: React.FC = () => {
+    const navigate = useNavigate();
     const [query, setQuery] = React.useState<string>('');
     const [startDate, setStartDate] = React.useState<string>(''); // YYYY-MM-DD
     const [endDate, setEndDate] = React.useState<string>(''); // YYYY-MM-DD
@@ -281,8 +283,12 @@ const ReportsTable: React.FC = () => {
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white text-xs sm:text-sm">
                       {visibleData.map((row) => (
-              <tr key={row.id} className="text-gray-800">
-                <td className="px-4 py-4">
+                          <tr
+                              key={row.id}
+                              className="text-gray-800 hover:bg-gray-50 cursor-pointer"
+                              onClick={() => navigate(`/dashboard/reports/${row.id}`)}
+                          >
+                              <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
                   <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
                 </td>
                 <td className="px-4 py-4 fs-16">{row.facility}</td>
@@ -293,7 +299,7 @@ const ReportsTable: React.FC = () => {
                 <td className="px-4 py-4 fs-16">{row.reviewer}</td>
                 <td className="px-4 py-4 fs-16"><StatusPill status={row.status} /></td>
                 <td className="px-4 py-4 fs-16">{row.date}</td>
-                <td className="px-4 py-4 fs-16">
+                              <td className="px-4 py-4 fs-16" onClick={(e) => e.stopPropagation()}>
                                   <button className="rounded p-1 hover:bg-gray-100 cursor-pointer">
                     <DotsVerticalIcon />
                   </button>
