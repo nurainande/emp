@@ -222,15 +222,17 @@ const ReportsTable: React.FC = () => {
         </div>
       </div>
 
-      <div className="mb-3 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-        <div className="relative w-full sm:flex-1">
+
+
+          <div className="mb-3 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
+              <div className="relative w-full sm:w-6/12">
           <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
             <SearchIcon />
           </span>
           <input
             type="text"
             placeholder="Search by name, status, class...."
-                      className="float-right w-5/12 rounded-full border border-gray-200 bg-white py-2 pl-10 pr-14 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm focus:border-[#4B2A6A] focus:outline-none"
+                      className="w-full rounded-full border border-gray-200 bg-white py-2 pl-10 pr-14 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm focus:border-[#4B2A6A] focus:outline-none"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
           />
@@ -262,6 +264,8 @@ const ReportsTable: React.FC = () => {
                   </button>
         </div>
       </div>
+
+
 
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <table className="min-w-[900px] w-full table-fixed md:min-w-full">
