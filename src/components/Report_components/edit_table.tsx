@@ -1,22 +1,30 @@
 import React from 'react';
 
 const EditReportTable: React.FC = () => {
+    const [query, setQuery] = React.useState<string>('');
   return (
     <section className="w-full">
       {/* Header */}
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-        <div>
-          <h2 className="fs-24 font-semibold text-black">Incident Tag Report Details</h2>
-          <p className="fs-16 text-gray-500">Here's a detailed Look at your tag report.</p>
-          <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">
-            <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
-            <span>Report Approved</span>
-          </div>
-        </div>
+          <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+              {/* Top row: title and ID */}
+              <div className="flex items-start justify-between gap-4">
+                  <div>
+                      <h2 className="fs-24 font-semibold text-[#2D1B3D]">Incident Tag Report Details</h2>
+                      <p className="fs-16 text-gray-600">Here's a detailed Look at your tag report.</p>
+                      <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">
+                          <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
+                          <span>Report Approved</span>
+                      </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-[url('https://i.pravatar.cc/60')] bg-cover bg-center shadow-sm" />
+                      <div className="text-base font-semibold text-black">ID I-01225</div>
+                  </div>
+              </div>
 
-        <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
-          {/* Search */}
-          <div className="relative w-full max-w-md">
+              {/* Bottom row: search and actions aligned right */}
+              <div className="mt-4 flex items-center justify-end gap-2">
+                  <div className="relative w-full max-w-xl">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
               <SearchIcon />
             </span>
@@ -24,6 +32,8 @@ const EditReportTable: React.FC = () => {
               type="text"
               placeholder="Search by Keyword...."
               className="w-full rounded-full border border-gray-200 bg-white py-2 pl-10 pr-14 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm focus:border-[#4B2A6A] focus:outline-none"
+                          value={query}
+                          onChange={(e) => setQuery(e.target.value)}
             />
             <button
               type="button"
@@ -34,18 +44,20 @@ const EditReportTable: React.FC = () => {
               <SearchIcon />
             </button>
           </div>
-
-          {/* Round icons */}
-          <button className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm" aria-label="Profile">
-            <UserIcon />
+                  <button
+                      type="button"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm"
+                      aria-label="Print"
+                  >
+                      <PrintIcon />
           </button>
-          <button className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm" aria-label="Settings">
-            <SettingsIcon />
-          </button>
-          <button className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm" aria-label="Upload">
-            <UploadIcon />
-          </button>
-          <div className="rounded-xl border border-gray-200 px-4 py-2 text-sm text-gray-700">ID I-01225</div>
+                  <button
+                      type="button"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm"
+                      aria-label="Download"
+                  >
+                      <DownloadIcon />
+                  </button>
         </div>
       </div>
 
@@ -93,8 +105,7 @@ const EditReportTable: React.FC = () => {
                 <option>Minor</option>
                 <option>Moderate</option>
                 <option>Severe</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><ChevronDownIcon /></span>
+                          </select>
             </div>
           </div>
           <div>
@@ -109,8 +120,7 @@ const EditReportTable: React.FC = () => {
                 <option>Low</option>
                 <option>Medium</option>
                 <option>High</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><ChevronDownIcon /></span>
+                          </select>
             </div>
           </div>
         </div>
@@ -229,39 +239,13 @@ function ChevronDownIcon({ className = 'h-4 w-4' }: { className?: string }) {
   );
 }
 
-function UserIcon({ className = 'h-5 w-5' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
-      <circle cx="12" cy="8" r="4" />
-      <path d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6" />
-    </svg>
-  );
-}
-
-function SettingsIcon({ className = 'h-5 w-5' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
-      <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06A2 2 0 016.04 3.9l.06.06a1.65 1.65 0 001.82.33H8a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09c0 .67.39 1.27 1 1.51.59.27 1.28.17 1.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06c-.5.54-.6 1.23-.33 1.82.24.61.84 1 1.51 1H21a2 2 0 010 4h-.09c-.67 0-1.27.39-1.51 1z" />
-    </svg>
-  );
-}
-
-function UploadIcon({ className = 'h-5 w-5' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
-      <path d="M12 3v12" />
-      <path d="M7 8l5-5 5 5" />
-      <path d="M5 21h14" />
-    </svg>
-  );
-}
+// Removed unused UserIcon, SettingsIcon, UploadIcon
 
 function TargetIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
-      <circle cx="12" cy="12" r="8" />
-      <circle cx="12" cy="12" r="3" />
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="12" cy="12" r="3" />
     </svg>
   );
 }
@@ -269,12 +253,32 @@ function TargetIcon({ className = 'h-5 w-5' }: { className?: string }) {
 function CalendarIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" className="stroke-current" />
-      <line x1="16" y1="2" x2="16" y2="6" className="stroke-current" />
-      <line x1="8" y1="2" x2="8" y2="6" className="stroke-current" />
-      <line x1="3" y1="10" x2="21" y2="10" className="stroke-current" />
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" className="stroke-current" />
+          <line x1="16" y1="2" x2="16" y2="6" className="stroke-current" />
+          <line x1="8" y1="2" x2="8" y2="6" className="stroke-current" />
+          <line x1="3" y1="10" x2="21" y2="10" className="stroke-current" />
     </svg>
   );
+}
+
+function PrintIcon({ className = 'h-5 w-5' }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
+            <path d="M6 9V4h12v5" />
+            <rect x="6" y="13" width="12" height="8" rx="2" />
+            <path d="M6 17h12" />
+        </svg>
+    );
+}
+
+function DownloadIcon({ className = 'h-5 w-5' }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
+            <path d="M12 3v12" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M5 21h14" />
+        </svg>
+    );
 }
 
 export default EditReportTable;
