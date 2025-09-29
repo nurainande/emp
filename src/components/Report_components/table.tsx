@@ -70,11 +70,46 @@ function StatusPill({ status }: { status: ReportRow['status'] }) {
 
 const ReportsTable: React.FC = () => {
     const [query, setQuery] = React.useState<string>('');
+    const [startDate, setStartDate] = React.useState<string>(''); // YYYY-MM-DD
+    const [endDate, setEndDate] = React.useState<string>(''); // YYYY-MM-DD
+    const startRef = React.useRef<HTMLInputElement>(null);
+    const endRef = React.useRef<HTMLInputElement>(null);
+    const monthRef = React.useRef<HTMLInputElement>(null);
+    const [selectedMonth, setSelectedMonth] = React.useState<string>(''); // YYYY-MM
+
+    function parseDisplayDateToDate(input: string): Date | null {
+        // input like '23/06/2025' -> Date
+        const parts = input.split('/');
+        if (parts.length !== 3) return null;
+        const [dd, mm, yyyy] = parts.map((p) => parseInt(p, 10));
+        if (!dd || !mm || !yyyy) return null;
+        const d = new Date(yyyy, mm - 1, dd);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    function parseIsoToDisplay(iso: string): string {
+        // 'YYYY-MM-DD' -> 'DD/MM/YYYY'
+        if (!iso) return '';
+        const [y, m, d] = iso.split('-');
+        if (!y || !m || !d) return '';
+        return `${d}/${m}/${y}`;
+    }
+
+    function formatMonthLabel(ym: string): string {
+        // 'YYYY-MM' -> 'Mon YYYY'
+        if (!ym) return '';
+        const [y, m] = ym.split('-');
+        const date = new Date(parseInt(y, 10), parseInt(m, 10) - 1, 1);
+        return date.toLocaleString(undefined, { month: 'short', year: 'numeric' });
+    }
 
     const filteredData = React.useMemo(() => {
         const q = query.trim().toLowerCase();
-        if (!q) return data;
+        const start = startDate ? new Date(startDate) : null;
+        const end = endDate ? new Date(endDate) : null;
+        const month = selectedMonth ? selectedMonth : '';
         return data.filter((row) => {
+            // keyword match
             const haystack = [
                 row.facility,
                 row.reviewer,
@@ -87,9 +122,19 @@ const ReportsTable: React.FC = () => {
             ]
                 .join(' ')
                 .toLowerCase();
-            return haystack.includes(q);
+            const matchesKeyword = q ? haystack.includes(q) : true;
+
+            // date range match
+            const rowDate = parseDisplayDateToDate(row.date);
+            const matchesStart = start && rowDate ? rowDate >= start : true;
+            const matchesEnd = end && rowDate ? rowDate <= end : true;
+            const matchesMonth = month && rowDate
+                ? (rowDate.getFullYear() === parseInt(month.slice(0, 4), 10) && (rowDate.getMonth() + 1) === parseInt(month.slice(5, 7), 10))
+                : true;
+
+            return matchesKeyword && matchesStart && matchesEnd && matchesMonth;
         });
-    }, [query]);
+    }, [query, startDate, endDate, selectedMonth]);
 
     const [showAll, setShowAll] = React.useState<boolean>(false);
     const visibleData = React.useMemo(() => {
@@ -99,24 +144,74 @@ const ReportsTable: React.FC = () => {
   return (
     <section className="w-full">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3 sm:flex-nowrap">
-        <h2 className="text-base font-semibold text-black sm:text-lg">Reports</h2>
+        <h2 className="text-base font-semibold text-black fs-24">Reports</h2>
         <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
           {/* Date pickers */}
-          <button className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 shadow-sm hover:bg-gray-50 sm:text-sm">
+                  <button
+                      className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 fs-16 text-gray-700 shadow-sm hover:bg-gray-50 sm:text-sm"
+                      onClick={() => {
+                          if (startRef.current && (startRef.current as any).showPicker) {
+                              (startRef.current as any).showPicker();
+                          } else {
+                              startRef.current?.click();
+                          }
+                      }}
+                  >
             <CalendarIcon />
-            <span>Start Date</span>
+                      <span>{startDate ? parseIsoToDisplay(startDate) : 'Start Date'}</span>
             <ChevronDownIcon className="h-4 w-4" />
           </button>
-          <button className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 shadow-sm hover:bg-gray-50 sm:text-sm">
+                  <input
+                      ref={startRef}
+                      type="date"
+                      className="absolute h-0 w-0 opacity-0"
+                      value={startDate}
+                      max={endDate || undefined}
+                      onChange={(e) => setStartDate(e.target.value)}
+                  />
+                  <button
+                      className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 shadow-sm hover:bg-gray-50 sm:text-sm"
+                      onClick={() => {
+                          if (endRef.current && (endRef.current as any).showPicker) {
+                              (endRef.current as any).showPicker();
+                          } else {
+                              endRef.current?.click();
+                          }
+                      }}
+                  >
             <CalendarIcon />
-            <span>End Date</span>
+                      <span>{endDate ? parseIsoToDisplay(endDate) : 'End Date'}</span>
             <ChevronDownIcon className="h-4 w-4" />
           </button>
-          {/* Frequency */}
-          <button className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 shadow-sm hover:bg-gray-50 sm:text-sm">
-            <span>Monthly</span>
+                  <input
+                      ref={endRef}
+                      type="date"
+                      className="absolute h-0 w-0 opacity-0"
+                      value={endDate}
+                      min={startDate || undefined}
+                      onChange={(e) => setEndDate(e.target.value)}
+                  />
+                  {/* Month filter */}
+                  <button
+                      className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 shadow-sm hover:bg-gray-50 sm:text-sm"
+                      onClick={() => {
+                          if (monthRef.current && (monthRef.current as any).showPicker) {
+                              (monthRef.current as any).showPicker();
+                          } else {
+                              monthRef.current?.click();
+                          }
+                      }}
+                  >
+                      <span>{selectedMonth ? formatMonthLabel(selectedMonth) : 'Monthly'}</span>
             <ChevronDownIcon className="h-4 w-4" />
           </button>
+                  <input
+                      ref={monthRef}
+                      type="month"
+                      className="absolute h-0 w-0 opacity-0"
+                      value={selectedMonth}
+                      onChange={(e) => setSelectedMonth(e.target.value)}
+                  />
           {/* All filter */}
           <button className="inline-flex items-center gap-2 rounded-full bg-[#4B2A6A] px-4 py-2 text-xs text-white sm:text-sm">
             <span>All</span>
@@ -133,14 +228,36 @@ const ReportsTable: React.FC = () => {
           <input
             type="text"
             placeholder="Search by name, status, class...."
-            className="w-full rounded-full border border-gray-200 bg-white py-2 pl-10 pr-20 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none"
+                      className="float-right w-5/12 rounded-full border border-gray-200 bg-white py-2 pl-10 pr-14 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm focus:border-[#4B2A6A] focus:outline-none"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
           />
-          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-3 text-gray-500">
-            <span className="h-4 w-4"><BellIcon /></span>
-            <span className="h-4 w-4"><FilterIcon /></span>
-          </div>
+                  {/* Circular search icon button on the right edge */}
+                  <button
+                      type="button"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm"
+                      aria-label="Search"
+                      tabIndex={-1}
+                  >
+                      <SearchIcon />
+                  </button>
+              </div>
+              {/* Print and Download circular buttons */}
+              <div className="flex items-center gap-2">
+                  <button
+                      type="button"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm"
+                      aria-label="Print"
+                  >
+                      <PrintIcon />
+                  </button>
+                  <button
+                      type="button"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm"
+                      aria-label="Download"
+                  >
+                      <DownloadIcon />
+                  </button>
         </div>
       </div>
 
@@ -151,15 +268,15 @@ const ReportsTable: React.FC = () => {
               <th className="w-10 px-4 py-3 font-medium">
                 <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
               </th>
-              <th className="px-4 py-3 font-medium">Facility</th>
-              <th className="px-4 py-3 font-medium">Tagged Areas</th>
-              <th className="px-4 py-3 font-medium">Total Tag</th>
-              <th className="px-4 py-3 font-medium">Samples</th>
-              <th className="px-4 py-3 font-medium">Incidents</th>
-              <th className="px-4 py-3 font-medium">Reviewer</th>
-              <th className="px-4 py-3 font-medium">Status</th>
-              <th className="px-4 py-3 font-medium">Date</th>
-              <th className="px-4 py-3 font-medium">Action</th>
+              <th className="px-4 py-3 font-medium fs-16">Facility</th>
+              <th className="px-4 py-3 font-medium fs-16">Tagged Areas</th>
+              <th className="px-4 py-3 font-medium fs-16">Total Tag</th>
+              <th className="px-4 py-3 font-medium fs-16">Samples</th>
+              <th className="px-4 py-3 font-medium fs-16">Incidents</th>
+              <th className="px-4 py-3 font-medium fs-16">Reviewer</th>
+              <th className="px-4 py-3 font-medium fs-16">Status</th>
+              <th className="px-4 py-3 font-medium fs-16">Date</th>
+              <th className="px-4 py-3 font-medium fs-16">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white text-xs sm:text-sm">
@@ -168,16 +285,16 @@ const ReportsTable: React.FC = () => {
                 <td className="px-4 py-4">
                   <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
                 </td>
-                <td className="px-4 py-4">{row.facility}</td>
-                <td className="px-4 py-4">{row.taggedAreas}</td>
-                <td className="px-4 py-4">{row.totalTag}</td>
-                <td className="px-4 py-4">{row.samples}</td>
-                <td className="px-4 py-4">{row.incidents}</td>
-                <td className="px-4 py-4">{row.reviewer}</td>
-                <td className="px-4 py-4"><StatusPill status={row.status} /></td>
-                <td className="px-4 py-4">{row.date}</td>
-                <td className="px-4 py-4">
-                  <button className="rounded p-1 hover:bg-gray-100">
+                <td className="px-4 py-4 fs-16">{row.facility}</td>
+                <td className="px-4 py-4 fs-16">{row.taggedAreas}</td>
+                <td className="px-4 py-4 fs-16">{row.totalTag}</td>
+                <td className="px-4 py-4 fs-16">{row.samples}</td>
+                <td className="px-4 py-4 fs-16">{row.incidents}</td>
+                <td className="px-4 py-4 fs-16">{row.reviewer}</td>
+                <td className="px-4 py-4 fs-16"><StatusPill status={row.status} /></td>
+                <td className="px-4 py-4 fs-16">{row.date}</td>
+                <td className="px-4 py-4 fs-16">
+                                  <button className="rounded p-1 hover:bg-gray-100 cursor-pointer">
                     <DotsVerticalIcon />
                   </button>
                 </td>
@@ -186,7 +303,7 @@ const ReportsTable: React.FC = () => {
           </tbody>
         </table>
               {filteredData.length >= 4 && (
-                  <div className="flex items-center cursor-pointer justify-end bg-white px-4 py-3">
+                  <div className="flex items-center cursor-pointer justify-end bg-white px-4 py-3 fs-16">
                       <button
                           className="text-sm cursor-pointer font-medium text-[#7D3CE0] hover:underline"
                           onClick={() => setShowAll((v) => !v)}
@@ -228,29 +345,33 @@ function SearchIcon({ className = 'h-5 w-5' }: { className?: string }) {
   );
 }
 
-function BellIcon({ className = 'h-5 w-5' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
-      <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5" />
-      <path d="M13.73 21a2 2 0 01-3.46 0" />
-    </svg>
-  );
-}
-
-function FilterIcon({ className = 'h-5 w-5' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
-      <path d="M3 5h18M6 12h12M10 19h4" />
-    </svg>
-  );
-}
 
 function DotsVerticalIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className}>
-      <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0 5.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 15a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" />
+      <svg viewBox="0 0 20 20" fill="currentColor" className={className}>
+          <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0 5.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 15a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" />
     </svg>
   );
+}
+
+function PrintIcon({ className = 'h-5 w-5' }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
+            <path d="M6 9V4h12v5" />
+            <rect x="6" y="13" width="12" height="8" rx="2" />
+            <path d="M6 17h12" />
+        </svg>
+    );
+}
+
+function DownloadIcon({ className = 'h-5 w-5' }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
+            <path d="M12 3v12" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M5 21h14" />
+        </svg>
+    );
 }
 
 export default ReportsTable;
