@@ -69,6 +69,33 @@ function StatusPill({ status }: { status: ReportRow['status'] }) {
 }
 
 const ReportsTable: React.FC = () => {
+    const [query, setQuery] = React.useState<string>('');
+
+    const filteredData = React.useMemo(() => {
+        const q = query.trim().toLowerCase();
+        if (!q) return data;
+        return data.filter((row) => {
+            const haystack = [
+                row.facility,
+                row.reviewer,
+                row.status,
+                row.date,
+                row.taggedAreas,
+                row.totalTag,
+                row.samples,
+                row.incidents,
+            ]
+                .join(' ')
+                .toLowerCase();
+            return haystack.includes(q);
+        });
+    }, [query]);
+
+    const [showAll, setShowAll] = React.useState<boolean>(false);
+    const visibleData = React.useMemo(() => {
+        return showAll ? filteredData : filteredData.slice(0, 4);
+    }, [filteredData, showAll]);
+
   return (
     <section className="w-full">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3 sm:flex-nowrap">
@@ -107,6 +134,8 @@ const ReportsTable: React.FC = () => {
             type="text"
             placeholder="Search by name, status, class...."
             className="w-full rounded-full border border-gray-200 bg-white py-2 pl-10 pr-20 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
           />
           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-3 text-gray-500">
             <span className="h-4 w-4"><BellIcon /></span>
@@ -134,7 +163,7 @@ const ReportsTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white text-xs sm:text-sm">
-            {data.map((row) => (
+                      {visibleData.map((row) => (
               <tr key={row.id} className="text-gray-800">
                 <td className="px-4 py-4">
                   <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
@@ -156,9 +185,16 @@ const ReportsTable: React.FC = () => {
             ))}
           </tbody>
         </table>
-        <div className="flex items-center justify-end bg-white px-4 py-3">
-          <button className="text-sm font-medium text-[#7D3CE0] hover:underline">See All</button>
-        </div>
+              {filteredData.length >= 4 && (
+                  <div className="flex items-center cursor-pointer justify-end bg-white px-4 py-3">
+                      <button
+                          className="text-sm cursor-pointer font-medium text-[#7D3CE0] hover:underline"
+                          onClick={() => setShowAll((v) => !v)}
+                      >
+                          {showAll ? 'See Less' : 'See All'}
+                      </button>
+                  </div>
+              )}
       </div>
     </section>
   );
