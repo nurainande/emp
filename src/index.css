@@ -8,6 +8,9 @@
   --color-black: #000000;
   --color-gray: #999999;
   --color-bggray: #E8FBF514;
+  /* Global font-size variables */
+    --fs-24: 24px;
+    --fs-16: 16px;
 }
 
 /* @import "tailwindcss"; */
@@ -34,3 +37,14 @@ body {
   margin: 0;
   padding: 0;
 } */
+
+/* Global font-size utilities */
+.fs-24 {
+  font-size: var(--fs-24);
+  line-height: 1.4;
+}
+
+.fs-16 {
+  font-size: var(--fs-16);
+  line-height: 1.5;
+}

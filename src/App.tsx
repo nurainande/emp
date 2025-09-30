@@ -11,6 +11,7 @@ import DashboardFacilities from './pages/dashboard/DashboardFacilities'
 import DashboardReports from './pages/dashboard/DashboardReports'
 import DashboardSettings from './pages/dashboard/DashboardSettings'
 import DashboardViewFacility from './components/dashboard_components/dashboardFacilities/DashboardViewFacility'
+import EditReportTable from './components/Report_components/edit_table'
 
 function App() {
   return (
@@ -30,7 +31,9 @@ function App() {
           <Route path="facilities/:facilityId" element={<DashboardViewFacility />} />
           <Route path="reports" element={<DashboardReports />} />
           <Route path="settings" element={<DashboardSettings />} />
+          <Route path="reports/:reportId" element={<EditReportTable />} />
         </Route>
+
       </Routes>
     </>
   )
