@@ -20,8 +20,8 @@ const EditIncident: React.FC = () => {
         {/* Top row */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-[16px] sm:text-[18px] font-semibold text-[#2D1B3D]">Incident Tag Report Details</h2>
-            <p className="text-[14px] text-gray-600 mt-1">We’re excited to know what you found.</p>
+            <h2 className="fs-24 sm:text-[18px] font-semibold text-[#2D1B3D]">Incident Tag Report Details</h2>
+            <p className="fs-16 text-gray-600 mt-1">We’re excited to know what you found.</p>
           </div>
           <div className="text-[14px] sm:text-base font-semibold text-black">ID I-01225</div>
         </div>
@@ -68,14 +68,14 @@ const EditIncident: React.FC = () => {
                           </button>
                       </div>
                   </div>
-                  <button className="inline-flex items-center justify-center rounded-md bg-[#3C1C59] px-6 py-2 text-sm font-medium text-white cursor-pointer">Save</button>
+                  <button className="inline-flex items-center justify-center rounded-md bg-[#3C1C59] px-6 py-2 text-[16px] font-medium text-white cursor-pointer">Save</button>
         </div>
       </div>
 
       {/* Tag Details header */}
       <div className="mt-5 rounded-t-xl bg-[#331C4A] px-4 py-3 text-white">
-        <div className="text-sm font-semibold">Tag Details</div>
-        <div className="text-[12px] text-white/80">What did you find?</div>
+        <div className="text-[24] font-semibold ">Tag Details</div>
+        <div className="text-[14px] text-white/80">What did you find?</div>
       </div>
 
       {/* Form card */}
@@ -141,7 +141,7 @@ const EditIncident: React.FC = () => {
 
       {/* Attachments */}
           <div className="mt-6 w-90">
-        <div className="mb-3 text-sm font-semibold text-gray-800">Attachments</div>
+        <div className="mb-3 fs-24 font-semibold text-[#696969]">Attachments</div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="relative h-56 overflow-hidden rounded-xl border border-gray-200 bg-white">
             <img className="h-full w-full object-cover" src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=1470&auto=format&fit=crop" alt="attachment" />
@@ -156,8 +156,8 @@ const EditIncident: React.FC = () => {
 
       {/* Location */}
       <div className="mt-6 rounded-t-xl bg-[#331C4A] px-4 py-3 text-white">
-        <div className="text-sm font-semibold">Location <span className="text-white/70 text-xs">(Auto fills)</span></div>
-        <div className="text-xs text-white/80">Where did tagging take place?</div>
+        <div className="text-[16px] font-semibold">Location <span className="text-white/70 text-xs">(Auto fills)</span></div>
+        <div className="text-[14px] text-white/80">Where did tagging take place?</div>
       </div>
       <div className="rounded-b-xl border border-t-0 border-gray-200 bg-white p-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -178,8 +178,8 @@ const EditIncident: React.FC = () => {
 
       {/* Personnel */}
       <div className="mt-6 rounded-t-xl bg-[#331C4A] px-4 py-3 text-white">
-        <div className="text-sm font-semibold">Personnel <span className="text-white/70 text-xs">(Auto fills)</span></div>
-        <div className="text-xs text-white/80">Who worked on this?</div>
+        <div className="text-[16px] font-semibold">Personnel <span className="text-white/70 text-xs">(Auto fills)</span></div>
+        <div className="text-[14px] text-white/80">Who worked on this?</div>
       </div>
       <div className="rounded-b-xl border border-t-0 border-gray-200 bg-white p-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

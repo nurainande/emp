@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const EditReportTable: React.FC = () => {
     const [query, setQuery] = React.useState<string>('');
@@ -23,7 +24,9 @@ const EditReportTable: React.FC = () => {
                 {/* Top row: title and ID */}
                 <div className="flex items-start justify-between gap-4">
                     <div>
-                        <h2 className="fs-24 font-semibold text-[#2D1B3D]">Incident Tag Report Details</h2>
+                        <Link to="/dashboard/edit-incident">
+                            <h2 className="fs-24 font-semibold text-[#2D1B3D]">Incident Tag Report Details</h2>
+                        </Link>
                         <p className="text-[16px] text-gray-600">Here's a detailed Look at your tag report.</p>
                         <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">
                             <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
