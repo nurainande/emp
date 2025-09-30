@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import {
   MdDashboard,
@@ -11,7 +11,7 @@ import {
   MdMenu,
   MdClose,
   MdKeyboardArrowUp,
-  MdOutlineRocketLaunch
+  MdOutlineRocketLaunch,
 } from "react-icons/md";
 import { logo } from "../../assets";
 
@@ -31,6 +31,19 @@ const DashboardLayout = () => {
     { path: "/dashboard/reports", label: "Reports", icon: <MdDescription /> },
     { path: "/dashboard/settings", label: "Settings", icon: <MdSettings /> },
   ];
+
+  // ✅ Find the single most specific match
+  const matchingItem = useMemo(() => {
+    return (
+      navItems
+        .filter(
+          (item) =>
+            location.pathname === item.path ||
+            location.pathname.startsWith(item.path + "/")
+        )
+        .sort((a, b) => b.path.length - a.path.length)[0] || null
+    );
+  }, [location.pathname]);
 
   return (
     <div className="flex h-screen">
@@ -55,7 +68,7 @@ const DashboardLayout = () => {
           flex flex-col
           z-50
           transition-all duration-300 ease-in-out
-          px-3 py-5   /* 🔥 added padding inside */
+          px-3 py-5
         `}
       >
         {/* Logo + Toggle */}
@@ -65,7 +78,7 @@ const DashboardLayout = () => {
             alt="Logo"
             className={`transition-all ${
               sidebarOpen ? "w-7 h-auto" : "w-5 h-auto"
-            }`} // 🔥 resized logo
+            }`}
           />
 
           {/* Toggle Button (Desktop) */}
@@ -79,6 +92,7 @@ const DashboardLayout = () => {
               <MdMenu className="w-5 h-5" />
             )}
           </button>
+
           {/* Close for Mobile */}
           <button
             onClick={closeMobileSidebar}
@@ -91,7 +105,9 @@ const DashboardLayout = () => {
         {/* Navigation */}
         <nav className="flex-1 space-y-2">
           {navItems.map((item) => {
-            const active = location.pathname === item.path;
+            const active =
+              matchingItem && matchingItem.path === item.path;
+
             return (
               <Link
                 key={item.path}
@@ -123,7 +139,7 @@ const DashboardLayout = () => {
                 : "text-gray-300 hover:bg-white/10 hover:text-white"
             }`}
           >
-            < MdOutlineRocketLaunch className="text-lg" />
+            <MdOutlineRocketLaunch className="text-lg" />
             {sidebarOpen && (
               <span className="font-medium text-sm">Logout</span>
             )}
@@ -171,7 +187,7 @@ const DashboardLayout = () => {
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-auto ">
+        <main className="flex-1 overflow-auto">
           <div className="h-full bg-white rounded-tl-2xl px-4 lg:px-6 py-6">
             <Outlet />
           </div>
