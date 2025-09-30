@@ -2,6 +2,20 @@ import React from 'react';
 
 const EditReportTable: React.FC = () => {
     const [query, setQuery] = React.useState<string>('');
+    // Derive approval from current header state (static for now)
+    const isApproved = true;
+    const [showModal, setShowModal] = React.useState<boolean>(false);
+    const guarded = {
+        onFocus: () => {
+            if (isApproved) setShowModal(true);
+        },
+        onMouseDown: (e: React.MouseEvent) => {
+            if (isApproved) {
+                e.preventDefault();
+                setShowModal(true);
+            }
+        },
+    } as const;
     return (
         <section className="w-full mb-10">
             {/* Header */}
@@ -78,7 +92,7 @@ const EditReportTable: React.FC = () => {
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Tag Type</label>
                         <div className="relative">
-                            <select className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
+                            <select aria-disabled={isApproved} tabIndex={isApproved ? -1 : 0} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
                                 <option>Incident</option>
                                 <option>Inspection</option>
                             </select>
@@ -87,7 +101,7 @@ const EditReportTable: React.FC = () => {
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Source</label>
                         <div className="relative">
-                            <select className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
+                            <select aria-disabled={isApproved} tabIndex={isApproved ? -1 : 0} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
                                 <option>Environmental</option>
                                 <option>Operational</option>
                             </select>
@@ -97,14 +111,14 @@ const EditReportTable: React.FC = () => {
 
                 <div className="mt-4">
                     <label className="mb-2 block text-xs text-gray-500 fs-16">Describe source (i.e the actual / speculated cause of the damage)</label>
-                    <textarea className="h-28 w-full resize-none rounded-md border border-gray-200 bg-white p-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none" defaultValue="The walls are cracked as a result of the swampiness of the environment" />
+                    <textarea readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="h-28 w-full resize-none rounded-md border border-gray-200 bg-white p-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none" defaultValue="The walls are cracked as a result of the swampiness of the environment" />
                 </div>
 
                 <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Extent of Damage</label>
                         <div className="relative">
-                            <select className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
+                            <select aria-disabled={isApproved} tabIndex={isApproved ? -1 : 0} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
                                 <option>Minor</option>
                                 <option>Moderate</option>
                                 <option>Severe</option>
@@ -113,12 +127,12 @@ const EditReportTable: React.FC = () => {
                     </div>
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Any Previous Report?</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none" placeholder="Click To Link" />
+                        <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none" placeholder="Click To Link" />
                     </div>
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Risk Level</label>
                         <div className="relative">
-                            <select className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
+                            <select aria-disabled={isApproved} tabIndex={isApproved ? -1 : 0} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none">
                                 <option>Choose Risk Level</option>
                                 <option>Low</option>
                                 <option>Medium</option>
@@ -134,7 +148,7 @@ const EditReportTable: React.FC = () => {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div className="relative h-56 overflow-hidden rounded-xl border border-gray-200 bg-white">
                             <img className="h-full w-full object-cover" src="/src/assets/Added Media.png" alt="attachment" />
-                            <button className="absolute right-2 top-2 rounded-full bg-red-500 px-3 py-1 text-xs text-white shadow-sm">Delete</button>
+                            <button onMouseDown={(e) => { if (isApproved) { e.preventDefault(); setShowModal(true); } }} className="absolute right-2 top-2 rounded-full bg-red-500 px-3 py-1 text-xs text-white shadow-sm">Delete</button>
                             <span className="absolute bottom-2 right-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-purple-600 text-white">•</span>
                         </div>
                         <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50">
@@ -153,15 +167,15 @@ const EditReportTable: React.FC = () => {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Facility</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Comodore" />
+                        <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Comodore" />
                     </div>
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Room</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Main Laboratory" />
+                        <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Main Laboratory" />
                     </div>
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Asset</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Sink" />
+                        <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Sink" />
                     </div>
                 </div>
             </div>
@@ -175,12 +189,12 @@ const EditReportTable: React.FC = () => {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Tagged by</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Olatunji Chinedu Shehu" />
+                        <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Olatunji Chinedu Shehu" />
                     </div>
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Date</label>
                         <div className="relative">
-                            <input type="text" className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 pr-10 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="22nd August, 2025" />
+                            <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} type="text" className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 pr-10 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="22nd August, 2025" />
                             <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><CalendarIcon /></span>
                         </div>
                     </div>
@@ -188,12 +202,12 @@ const EditReportTable: React.FC = () => {
                 <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Reviewed by</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Mari Lee Shua" />
+                        <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Mari Lee Shua" />
                     </div>
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Date</label>
                         <div className="relative">
-                            <input type="text" className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 pr-10 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="2nd September, 2025" />
+                            <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} type="text" className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 pr-10 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="2nd September, 2025" />
                             <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><CalendarIcon /></span>
                         </div>
                     </div>
@@ -209,18 +223,32 @@ const EditReportTable: React.FC = () => {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Report Status</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Approved" />
+                        <input readOnly aria-disabled className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700" defaultValue="Approved" />
                     </div>
                     <div>
                         <label className="mb-2 block text-xs text-gray-500">Issues Assigned To</label>
-                        <input className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Maintenance Team" />
+                        <input readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#4B2A6A] focus:outline-none" defaultValue="Maintenance Team" />
                     </div>
                 </div>
                 <div className="mt-4">
                     <label className="mb-2 block text-xs text-gray-500">Reviewer's Comment</label>
-                    <textarea className="h-36 w-full resize-none rounded-md border border-gray-200 bg-white p-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none" placeholder="What your reviewer thinks about your review" />
+                    <textarea readOnly={isApproved} aria-disabled={isApproved} {...guarded} className="h-36 w-full resize-none rounded-md border border-gray-200 bg-white p-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none" placeholder="What your reviewer thinks about your review" />
                 </div>
             </div>
+            {/* Lock modal */}
+            {showModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black/50" onClick={() => setShowModal(false)} />
+                    <div className="relative z-10 w-[90%] max-w-md rounded-2xl bg-white p-6 text-center shadow-2xl">
+                        <h3 className="mb-4 text-xl font-semibold text-gray-900">Sorry!</h3>
+                        <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full">
+                            <img src="/src/assets/x-circle.png" alt="x" className="h-20 w-20" />
+                        </div>
+                        <p className="mb-6 text-sm text-gray-600">Your report has been reviewed and cannot be edited.</p>
+                        <button onClick={() => setShowModal(false)} className="mx-auto rounded-full bg-white px-4 py-2 text-sm font-medium text-green-600 hover:underline">Okay, thank you.</button>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };
