@@ -161,7 +161,7 @@ const DashboardLayout = () => {
                 <MdMenu className="w-5 h-5" />
               </button>
               <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
-                Facilities
+                {matchingItem ? matchingItem.label : "Dashboard"}
               </h1>
             </div>
             <div className="flex items-center gap-2 lg:gap-4">
