@@ -3,17 +3,17 @@ import React from 'react';
 const EditReportTable: React.FC = () => {
     const [query, setQuery] = React.useState<string>('');
     return (
-        <section className="w-full">
+        <section className="w-full mb-10">
             {/* Header */}
             <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
                 {/* Top row: title and ID */}
                 <div className="flex items-start justify-between gap-4">
                     <div>
                         <h2 className="fs-24 font-semibold text-[#2D1B3D]">Incident Tag Report Details</h2>
-                        <p className="fs-16 text-gray-600">Here's a detailed Look at your tag report.</p>
+                        <p className="text-[16px] text-gray-600">Here's a detailed Look at your tag report.</p>
                         <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs text-green-600">
                             <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
-                            <span>Report Approved</span>
+                            <span className="text-[10px]">Report Approved</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -69,7 +69,7 @@ const EditReportTable: React.FC = () => {
             {/* Purple Section Header */}
             <div className="rounded-t-xl bg-[#331C4A] px-4 py-3 text-white">
                 <div className="text-sm font-semibold">Tag Details</div>
-                <div className="text-xs text-white/80">What did you find?</div>
+                <div className="text-[14px] text-white/80">What did you find?</div>
             </div>
 
             {/* Form Card */}
@@ -96,7 +96,7 @@ const EditReportTable: React.FC = () => {
                 </div>
 
                 <div className="mt-4">
-                    <label className="mb-2 block text-xs text-gray-500">Describe source (i.e the actual / speculated cause of the damage)</label>
+                    <label className="mb-2 block text-xs text-gray-500 fs-16">Describe source (i.e the actual / speculated cause of the damage)</label>
                     <textarea className="h-28 w-full resize-none rounded-md border border-gray-200 bg-white p-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-[#4B2A6A] focus:outline-none" defaultValue="The walls are cracked as a result of the swampiness of the environment" />
                 </div>
 
@@ -201,7 +201,7 @@ const EditReportTable: React.FC = () => {
             </div>
 
             {/* Report Status */}
-            <div className="mt-6 rounded-t-xl bg-[#331C4A] px-4 py-3 text-white">
+            <div className="mt-20 rounded-t-xl bg-[#331C4A] px-4 py-3 text-white">
                 <div className="text-sm font-semibold">Report Status <span className="text-white/70 text-xs">(Reviewer Use)</span></div>
                 <div className="text-xs text-white/80">What stage is the report at?</div>
             </div>
