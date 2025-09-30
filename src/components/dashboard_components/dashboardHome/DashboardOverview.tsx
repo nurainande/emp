@@ -6,6 +6,10 @@ import {  line1,
     line2,
     line3,
     line4,
+    total_samples,
+    total_facilities,
+    total_reviewers,
+    total_samplers,
     trendingup1,
     trendingup2,
     trendingup3,
@@ -31,7 +35,7 @@ const DashboardOverview = () => {
           trendText="+1 to last month"
           trendImage={trendingup1}
           chartImage={line1}
-          icon={trendingup1}
+          icon={total_samples}
         />
         <StatCard
           title="Total Facilities"
@@ -39,7 +43,7 @@ const DashboardOverview = () => {
           trendText="+34 to last month"
           trendImage={trendingup2}
           chartImage={line2}
-          icon={trendingup2}
+          icon={total_facilities}
         />
         <StatCard
           title="Total Reviewers"
@@ -47,7 +51,7 @@ const DashboardOverview = () => {
           trendText="+200 to last month"
           trendImage={trendingup3}
           chartImage={line3}
-          icon={trendingup3}
+          icon={total_reviewers}
         />
         <StatCard
           title="Total Samplers"
@@ -55,7 +59,7 @@ const DashboardOverview = () => {
           trendText="0 to last month"
           trendImage={trendingup4}
           chartImage={line4}
-          icon={trendingup4}
+          icon={total_samplers}
         />
       </div>
     </div>
