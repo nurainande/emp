@@ -5,6 +5,11 @@ import amico3 from './amico3.png';
 
 import checkCircle from './check-circle.png';
 
+import total_samples from './total_samples.png';
+import total_facilities from './total_facilities.png';
+import total_reviewers from './total_reviewers.png';
+import total_samplers from './total_samplers.png';
+
 import line1 from './line1.png';
 import line2 from './line2.png';
 import line3 from './line3.png';
@@ -27,6 +32,10 @@ export {
     amico2,
     amico3,
     checkCircle,
+    total_samples,
+    total_facilities,
+    total_reviewers,
+    total_samplers,
     line1,
     line2,
     line3,
