@@ -12,6 +12,7 @@ import DashboardReports from './pages/dashboard/DashboardReports'
 import DashboardSettings from './pages/dashboard/DashboardSettings'
 import DashboardViewFacility from './components/dashboard_components/dashboardFacilities/DashboardViewFacility'
 import EditReportTable from './components/Report_components/edit_table'
+import EditIncident from './components/Report_components/edit_incident'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="forgot-password" element={<ForgotPasswordPage />} />
         <Route path="password-sent" element={<PasswordSentPage />} />
+        
 
         {/* dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
@@ -32,6 +34,7 @@ function App() {
           <Route path="reports" element={<DashboardReports />} />
           <Route path="settings" element={<DashboardSettings />} />
           <Route path="reports/:reportId" element={<EditReportTable />} />
+          <Route path="edit-incident" element={<EditIncident />} />
         </Route>
 
       </Routes>

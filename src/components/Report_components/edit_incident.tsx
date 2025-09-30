@@ -6,17 +6,17 @@ const EditIncident: React.FC = () => {
   return (
     <section className="w-full mb-10">
       {/* Page header */}
-      <div className="mb-6 flex items-center justify-between">
+          {/* <div className="mb-6 flex items-center justify-between">
         <h1 className="text-xl font-semibold text-[#2D1B3D]">Report</h1>
         <div className="flex items-center gap-3 text-gray-600">
           <RoundIcon><SearchIcon /></RoundIcon>
           <RoundIcon><ClockIcon /></RoundIcon>
           <RoundIcon><BellIcon /></RoundIcon>
         </div>
-      </div>
+      </div> */}
 
       {/* Main card */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+          <div className="bg-white p-4 pt-8">
         {/* Top row */}
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -28,28 +28,47 @@ const EditIncident: React.FC = () => {
 
         {/* Search + actions */}
         <div className="mt-4 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
-          <div className="relative w-full sm:w-8/12 lg:w-7/12">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <SearchIcon />
-            </span>
-            <input
-              type="text"
-              placeholder="Search by Keyword...."
-              className="w-full rounded-full border border-gray-200 bg-white py-2 pl-10 pr-28 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm focus:border-[#4B2A6A] focus:outline-none"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <div className="pointer-events-none absolute right-24 top-1/2 -translate-y-1/2 text-gray-500">
-              <RoundIcon size="sm"><SearchIcon /></RoundIcon>
-            </div>
-            <div className="pointer-events-none absolute right-16 top-1/2 -translate-y-1/2 text-gray-500">
-              <RoundIcon size="sm"><UserIcon /></RoundIcon>
-            </div>
-            <div className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2 text-gray-500">
-              <RoundIcon size="sm"><DownloadIcon /></RoundIcon>
-            </div>
-          </div>
-          <button className="inline-flex items-center justify-center rounded-md bg-[#3C1C59] px-6 py-2 text-sm font-medium text-white">Save</button>
+                  <div className="mb-3 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
+                      <div className="relative w-full sm:flex-1">
+                          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              <SearchIcon />
+                          </span>
+                          <input
+                              type="text"
+                              placeholder="Search by name, status, class...."
+                              className="w-full rounded-full border border-gray-200 bg-white py-2 pl-10 pr-14 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm focus:border-[#4B2A6A] focus:outline-none"
+                              value={query}
+                              onChange={(e) => setQuery(e.target.value)}
+                          />
+                          {/* Circular search icon button on the right edge */}
+                          <button
+                              type="button"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center text-gray-600"
+                              aria-label="Search"
+                              tabIndex={-1}
+                          >
+                              <SearchIcon />
+                          </button>
+                      </div>
+                      {/* Print and Download circular buttons */}
+                      <div className="flex items-center gap-2">
+                          <button
+                              type="button"
+                              className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm"
+                              aria-label="Print"
+                          >
+                              <PrintIcon />
+                          </button>
+                          <button
+                              type="button"
+                              className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm"
+                              aria-label="Download"
+                          >
+                              <DownloadIcon />
+                          </button>
+                      </div>
+                  </div>
+                  <button className="inline-flex items-center justify-center rounded-md bg-[#3C1C59] px-6 py-2 text-sm font-medium text-white cursor-pointer">Save</button>
         </div>
       </div>
 
@@ -69,8 +88,7 @@ const EditIncident: React.FC = () => {
                 <option>Choose Tag Type</option>
                 <option>Incident</option>
                 <option>Inspection</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><ChevronDownIcon /></span>
+                          </select>
             </div>
           </div>
           <div>
@@ -80,8 +98,7 @@ const EditIncident: React.FC = () => {
                 <option>Choose Source</option>
                 <option>Environmental</option>
                 <option>Operational</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><ChevronDownIcon /></span>
+                          </select>
             </div>
           </div>
         </div>
@@ -99,8 +116,7 @@ const EditIncident: React.FC = () => {
                 <option>Minor</option>
                 <option>Moderate</option>
                 <option>Severe</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><ChevronDownIcon /></span>
+                          </select>
             </div>
           </div>
           <div>
@@ -117,20 +133,19 @@ const EditIncident: React.FC = () => {
                 <option>Low</option>
                 <option>Medium</option>
                 <option>High</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><ChevronDownIcon /></span>
+                          </select>
             </div>
           </div>
         </div>
       </div>
 
       {/* Attachments */}
-      <div className="mt-6">
+          <div className="mt-6 w-90">
         <div className="mb-3 text-sm font-semibold text-gray-800">Attachments</div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="relative h-56 overflow-hidden rounded-xl border border-gray-200 bg-white">
             <img className="h-full w-full object-cover" src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=1470&auto=format&fit=crop" alt="attachment" />
-            <button className="absolute right-2 top-2 rounded-full bg-red-500 px-3 py-1 text-xs text-white shadow-sm">Delete</button>
+                      <button className="absolute right-2 top-2 rounded-full bg-red-500 px-3 py-1 text-xs text-white shadow-sm cursor-pointer">Delete</button>
             <span className="absolute bottom-2 right-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-purple-600 text-white">•</span>
           </div>
           <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50">
@@ -266,6 +281,16 @@ function CalendarIcon({ className = 'h-5 w-5' }: { className?: string }) {
       <line x1="3" y1="10" x2="21" y2="10" className="stroke-current" />
     </svg>
   );
+}
+
+function PrintIcon({ className = 'h-5 w-5' }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className}>
+            <path d="M6 9V4h12v5" />
+            <rect x="6" y="13" width="12" height="8" rx="2" />
+            <path d="M6 17h12" />
+        </svg>
+    );
 }
 
 export default EditIncident;
