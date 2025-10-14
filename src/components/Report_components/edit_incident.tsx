@@ -4,7 +4,7 @@ const EditIncident: React.FC = () => {
   const [query, setQuery] = React.useState<string>('');
 
   return (
-    <section className="w-full mb-10">
+    <section className="w-full mb-10 mx-4 lg:mx-6 my-6">
       {/* Page header */}
           {/* <div className="mb-6 flex items-center justify-between">
         <h1 className="text-xl font-semibold text-[#2D1B3D]">Report</h1>

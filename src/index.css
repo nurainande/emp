@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -8,35 +9,18 @@
   --color-black: #000000;
   --color-gray: #999999;
   --color-bggray: #E8FBF514;
+  --color-prime:#130B1A;
   /* Global font-size variables */
     --fs-24: 24px;
     --fs-16: 16px;
+
+      /* 👇 Global font family */
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* @import "tailwindcss"; */
-
-/* @theme {
-  --color-primary: #2d1b3d;
-  --color-secondary: #ec4899;
-  --color-accent: #fbbf24;
-  --color-white: #ffffff;
-
-  --color-black: #000000;
-  --color-gray: #6B7280;
-  --color-light-gray: #D1D5DB;
-  --color-dark-gray: #374151;
-  --color-background: #F9FAFB;
-  --font-sans: 'Helvetica Neue', Arial, sans-serif;
-  --font-serif: 'Georgia', serif;
-  --font-mono: 'Courier New', monospace;
-}
-body {
+html {
   font-family: var(--font-sans);
-  background-color: var(--color-background);
-  color: var(--color-dark-gray);
-  margin: 0;
-  padding: 0;
-} */
+}
 
 /* Global font-size utilities */
 .fs-24 {
@@ -48,3 +32,5 @@ body {
   font-size: var(--fs-16);
   line-height: 1.5;
 }
+
+  

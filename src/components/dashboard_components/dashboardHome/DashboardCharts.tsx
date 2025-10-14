@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ScatterChart,
   Scatter,
@@ -13,6 +13,7 @@ import {
   ReferenceLine,
 } from "recharts";
 import { Calendar, Download, TrendingUp, TrendingDown } from "lucide-react";
+import MessageModal from "../../ui/MessageModal";
 
 /* ---------------- Types ---------------- */
 type Organism = "bacteria" | "fungi" | "virus" | "parasite" | "others";
@@ -96,14 +97,8 @@ const sampleData: SamplePoint[] = [
   { id: 49, month: "Dec", day: 15, value: 2, organism: "virus", y: 45 },
   { id: 50, month: "Dec", day: 20, value: 2, organism: "fungi", y: 50 },
 
-  
 
-
-
-
-
-
-  // ... (keep your full dataset here)
+  // ... (I will keep my full dataset here)
 ];
 
 /* ---------------- Donut Data ---------------- */
@@ -188,6 +183,9 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 /* ---------------- DashboardCharts ---------------- */
 const DashboardCharts: React.FC = () => {
+  // for the modal to show success or error
+  const [showModal, setShowModal] = useState(false);
+
   const scatterData = useMemo(() => {
     return sampleData.map((s) => {
       const mi = monthLabels.indexOf(s.month);
@@ -203,37 +201,44 @@ const DashboardCharts: React.FC = () => {
 
   const donutTotal = useMemo(() => donutData.reduce((s, d) => s + d.value, 0), []);
 
+  
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
       {/* LEFT: Scatter */}
       <div className="bg-white rounded-2xl shadow-2xl p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div>
+        <div className="positivity-top mb-4">
+           <header className="flex justify-between">
             <h3 className="text-lg font-semibold text-gray-800">Positivity Rates</h3>
-            <div className="flex items-center mt-1">
+            <button className="text-gray-600" onClick={() => setShowModal(true)}>
+              <Download size={16} />
+            </button>
+            <MessageModal isOpen={showModal} onClose={() => setShowModal(false)} title="Download Successfull!" message="You successfully downloaded Repord ID-0125." iconSrc="/src/assets/check-circle.png" buttonText="Got it" />
+           </header>
+           <div className="lower flex justify-between">
+            <div className="flex mt-1">
               <span className="text-green-600 text-sm font-medium mr-2">+10.05%</span>
               <span className="text-gray-400 text-sm">to last year</span>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 text-xs text-gray-600">
+            <form action="" className="flex items-center gap-1">
+              <div className="flex items-center gap-1 text-xs text-gray-600">
               <Calendar size={14} />
               <span>10/02/2023</span>
             </div>
-            <div className="text-xs text-gray-600">End Date</div>
+               <div className="text-xs text-gray-600">End Date</div>
             <select className="text-xs border border-gray-200 rounded px-2 py-1 bg-white">
               <option>Monthly</option>
               <option>Weekly</option>
               <option>Daily</option>
             </select>
-            <select className="text-xs bg-purple-600 text-white rounded px-2 py-1">
+            <select className="text-xs bg-[#331C4A] text-white rounded px-2 py-1">
               <option>All</option>
             </select>
-            <button className="text-gray-600">
-              <Download size={16} />
-            </button>
-          </div>
+            </form>
+
+           </div>
         </div>
+        
         <div className="flex flex-wrap items-center gap-4 mb-4">
           {Object.entries(COLORS).map(([key, color]) => (
             <div key={key} className="flex items-center gap-2">
@@ -272,7 +277,7 @@ const DashboardCharts: React.FC = () => {
       {/* RIGHT: Donut */}
       <div className="bg-white rounded-2xl p-6 shadow-2xl flex flex-col">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Positive Samples detected</h3>
+          <div></div>
           <div className="flex items-center gap-2">
             <Calendar size={14} className="text-gray-600" />
             <span className="text-xs text-gray-600">Start Date</span>
@@ -283,7 +288,7 @@ const DashboardCharts: React.FC = () => {
               <option>Weekly</option>
               <option>Daily</option>
             </select>
-            <select className="text-xs bg-purple-600 text-white rounded px-2 py-1">
+            <select className="text-xs bg-[#331C4A] text-white rounded px-2 py-1">
               <option>All</option>
             </select>
             <button className="text-gray-600">

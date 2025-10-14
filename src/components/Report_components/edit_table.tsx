@@ -17,7 +17,7 @@ const EditReportTable: React.FC = () => {
         },
     } as const;
     return (
-        <section className="w-full mb-10">
+        <section className="w-full mb-10 mx-4 lg:mx-6 my-6">
             {/* Header */}
             <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
                 {/* Top row: title and ID */}

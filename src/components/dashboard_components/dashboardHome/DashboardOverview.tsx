@@ -18,7 +18,7 @@ import {  line1,
 
 const DashboardOverview = () => {
   return (
-    <div className="space-y-8 mb-6">
+    <div className="space-y-8 mb-10">
       {/* Welcome Section */}
       <div className="bg-white py-4">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back!</h1>

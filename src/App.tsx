@@ -13,6 +13,7 @@ import DashboardSettings from './pages/dashboard/DashboardSettings'
 import DashboardViewFacility from './components/dashboard_components/dashboardFacilities/DashboardViewFacility'
 import EditReportTable from './components/Report_components/edit_table'
 import EditIncident from './components/Report_components/edit_incident'
+import DashboardNotification from './pages/dashboard/DashboardNotification'
 
 function App() {
   return (
@@ -28,13 +29,20 @@ function App() {
 
         {/* dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
+          {/* Dashboard Home */}
           <Route index element={<DashboardHome />} />
+          {/* Dashboard Facilities */}
           <Route path="facilities" element={<DashboardFacilities />}/>
           <Route path="facilities/:facilityId" element={<DashboardViewFacility />} />
+          {/* Dashboard Reports */}
           <Route path="reports" element={<DashboardReports />} />
-          <Route path="settings" element={<DashboardSettings />} />
           <Route path="reports/:reportId" element={<EditReportTable />} />
           <Route path="edit-incident" element={<EditIncident />} />
+          {/* Dashboard settings */}
+          <Route path="settings" element={<DashboardSettings />} />
+
+          {/* Dashboard notification */}
+          <Route path="notification" element={<DashboardNotification />} />
         </Route>
 
       </Routes>

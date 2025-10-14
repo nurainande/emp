@@ -151,7 +151,7 @@ const DashboardFacilityListView: React.FC = () => {
             className={`px-5 py-2 rounded-md text-xs font-medium transition-colors
               ${
                 activeTab === tab
-                  ? "bg-[#3C0A6D] text-white" // Active tab
+                  ? "bg-primary text-white" // Active tab
                   : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50" // Inactive tab
               }`}
           >
@@ -171,7 +171,7 @@ const DashboardFacilityListView: React.FC = () => {
               placeholder="Search by Facility, Status, Locat...."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#3C0A6D] text-xs"
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary text-xs"
             />
           </div>
 
@@ -186,7 +186,7 @@ const DashboardFacilityListView: React.FC = () => {
                 placeholder="Start Date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="pl-9 pr-3 py-2.5 border border-gray-300 rounded-md text-xs focus:ring-2 focus:ring-[#3C0A6D]"
+                className="pl-9 pr-3 py-2.5 border border-gray-300 rounded-md text-xs focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -199,11 +199,11 @@ const DashboardFacilityListView: React.FC = () => {
                 placeholder="End Date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="pl-9 pr-3 py-2.5 border border-gray-300 rounded-md text-xs focus:ring-2 focus:ring-[#3C0A6D]"
+                className="pl-9 pr-3 py-2.5 border border-gray-300 rounded-md text-xs focus:ring-2 focus:ring-primary"
               />
             </div>
 
-            <select className="px-3 py-2.5 border border-gray-300 rounded-md text-xs bg-white focus:ring-2 focus:ring-[#3C0A6D]">
+            <select className="px-3 py-2.5 border border-gray-300 rounded-md text-xs bg-white focus:ring-2 focus:ring-primary">
               <option>Monthly</option>
               <option>Weekly</option>
               <option>Daily</option>
@@ -214,7 +214,7 @@ const DashboardFacilityListView: React.FC = () => {
               <button
                 onClick={() => setViewMode("grid")}
                 className={`p-2.5 ${
-                  viewMode === "grid" ? "bg-[#3C0A6D] text-white" : "text-gray-500 hover:bg-gray-100"
+                  viewMode === "grid" ? "bg-primary text-white" : "text-gray-500 hover:bg-gray-100"
                 }`}
               >
                 <FaTableCellsLarge className="h-4 w-4" />
@@ -222,14 +222,14 @@ const DashboardFacilityListView: React.FC = () => {
               <button
                 onClick={() => setViewMode("table")}
                 className={`p-2.5 ${
-                  viewMode === "table" ? "bg-[#3C0A6D] text-white" : "text-gray-500 hover:bg-gray-100"
+                  viewMode === "table" ? "bg-primary text-white" : "text-gray-500 hover:bg-gray-100"
                 }`}
               >
                 <FaBarsStaggered className="h-4 w-4" />
               </button>
             </div>
 
-            <button className="flex items-center gap-2 px-3 py-2.5 bg-[#3C0A6D] text-white rounded-md hover:bg-purple-800 text-xs">
+            <button className="flex items-center gap-2 px-3 py-2.5 bg-primary text-white rounded-md hover:bg-purple-800 text-xs">
               <FaDownload className="h-4 w-4" /> Download
             </button>
           </div>
@@ -241,12 +241,12 @@ const DashboardFacilityListView: React.FC = () => {
         // Table View
         <div className="overflow-x-auto bg-white border border-gray-200 rounded-md mt-4">
           <table className="w-full">
-            <thead className="bg-[#3C0A6D] text-white text-xs">
+            <thead className="bg-primary text-white text-xs">
               <tr>
                 <th className="px-4 py-3 text-left">
                   <input
                     type="checkbox"
-                    className="rounded border-white text-[#3C0A6D] bg-white h-4 w-4"
+                    className="rounded border-white text-primary bg-white h-4 w-4"
                     checked={allFacilitiesSelected}
                     onChange={handleSelectAll}
                     ref={(input) => {
@@ -269,7 +269,7 @@ const DashboardFacilityListView: React.FC = () => {
                   <td className="px-4 py-3">
                     <input
                       type="checkbox"
-                      className="rounded border-gray-300 text-[#3C0A6D] h-4 w-4"
+                      className="rounded border-gray-300 text-primary h-4 w-4"
                       checked={selectedFacilities.includes(facility.id)}
                       onChange={() => handleSelectFacility(facility.id)}
                     />
@@ -284,7 +284,7 @@ const DashboardFacilityListView: React.FC = () => {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <button className="text-[#3C0A6D] hover:text-purple-800 font-medium" onClick={()=>navigate('/dashboard/facilities/facilityId')}>{facility.action}</button>
+                    <button className="text-primary hover:text-purple-800 font-medium" onClick={()=>navigate('/dashboard/facilities/facilityId')}>{facility.action}</button>
                   </td>
                 </tr>
               ))}
@@ -319,7 +319,7 @@ const DashboardFacilityListView: React.FC = () => {
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xs text-gray-500">{facility.totalTags} Tags</span>
                 </div>
-                <button className="w-full py-2 bg-[#3C0A6D] text-white rounded-md text-xs font-medium hover:bg-purple-800 transition-colors">
+                <button className="w-full py-2 bg-primary text-white rounded-md text-xs font-medium hover:bg-purple-800 transition-colors">
                   {facility.action}
                 </button>
               </div>

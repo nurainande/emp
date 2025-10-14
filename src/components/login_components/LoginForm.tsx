@@ -44,7 +44,7 @@ const LoginForm = () => {
       {/* Login Form */}
       <div className="bg-white rounded-3xl p-6 shadow-2xl w-full max-w-lg min-h-[400px] flex flex-col justify-center z-20">
         <div className="text-center mb-6">
-          <h1 className="text-xl font-bold text-gray-900 mb-2">
+          <h1 className="text-xl font-bold text-prime mb-2">
             Nice to have you here!
           </h1>
         </div>
@@ -65,7 +65,7 @@ const LoginForm = () => {
           {/* Password Input */}
           <div className="relative">
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? "password" : "text"}
               name="password"
               placeholder="Enter Password"
               value={formData.password}

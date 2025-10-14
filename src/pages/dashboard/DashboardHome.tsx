@@ -7,7 +7,7 @@ import  DashboardLocationDistributionLogs from '../../components/dashboard_compo
 
 const DashboardHome:React.FC = () => {
   return (
-    <div className="min-h-full">
+    <div className="min-h-full mx-4 lg:mx-6 my-6">
      <DashboardOverview/>
      <DashboardCharts/>
      <DashboardActivitiesLog/>
